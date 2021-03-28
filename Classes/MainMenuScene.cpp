@@ -23,11 +23,14 @@
  ****************************************************************************/
 
 #include "MainMenuScene.h"
-
+#include "OptionsScene.h"
+#include "GameScene.h"
+#include "ScoreboardScene.h"
+#include "CreditScene.h"
 
 USING_NS_CC;
 using namespace cocos2d;
-using namespace ui;
+using namespace cocos2d::ui;
 
 Scene* MainMenuScene::createScene()
 {
@@ -60,27 +63,93 @@ bool MainMenuScene::init()
     this->addChild(bg, -2);
 
     //create title label
-    auto titlelabel = Label::createWithTTF("TOMDICKHARRY","fonts/Marker Felt.ttf", 24);
+    auto titlelabel = Label::createWithTTF("TOMDICKHARRY","fonts/Marker Felt.ttf", 32);
     /*auto titlelabel = Label::create();
     titlelabel->setBMFontFilePath("craftacular/raw/font-title-export.fnt");
     titlelabel->setString("TOMDICKHARRY");*/
     //auto titlelabel = Label::createWithBMFont("craftacular/skin/font-title-export.fnt", "TOMDICKHARRY",);
     //titlelabel->setAnchorPoint(Vec2(0, 0));
     titlelabel->setPosition(Vec2(origin.x + visibleSize.width / 2,
-        origin.y + visibleSize.height - visibleSize.width / 10));
+        origin.y + visibleSize.height - titlelabel->getContentSize().height));
     titlelabel->setTextColor(Color4B::ORANGE);
     titlelabel->enableOutline(Color4B::WHITE, 3);
     //Adds a child with the z-order of -2
     //scene->addChild(title_node, -2);
     this->addChild(titlelabel, -1);
 
-    // create menu, it's an autorelease object
-   /* menu = Menu::create();
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);*/
-    auto newgamebutton = Button::create();
-    newgamebutton->setTitleText("NEW GAME");
-    this->addChild(newgamebutton, 1);
+   
+    //add main menu
+
+    auto mainmenu = Menu::create();
+    int index = 2;
+
+    // startLabel
+    auto itemlabel = Label::createWithTTF("Start", "fonts/Marker Felt.ttf", 24);
+    auto menuItem = MenuItemLabel::create(itemlabel);
+    menuItem->setCallback([&](cocos2d::Ref* sender) {
+        Director::getInstance()->replaceScene(GameScene::createScene());
+        });
+    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
+        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
+
+    mainmenu->addChild(menuItem, 2);
+    mainmenu->setPosition(Vec2::ZERO);
+
+    // optionsLabel
+    itemlabel = Label::createWithTTF("Options", "fonts/Marker Felt.ttf", 24);
+    menuItem = MenuItemLabel::create(itemlabel);
+    menuItem->setCallback([&](cocos2d::Ref* sender) {
+        Director::getInstance()->replaceScene(OptionsScene::createScene());
+        });
+    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
+        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
+
+    mainmenu->addChild(menuItem, 2);
+    mainmenu->setPosition(Vec2::ZERO);
+
+    // scoreboardLabel
+    itemlabel = Label::createWithTTF("Scoreboard", "fonts/Marker Felt.ttf", 24);
+    menuItem = MenuItemLabel::create(itemlabel);
+    menuItem->setCallback([&](cocos2d::Ref* sender) {
+        Director::getInstance()->replaceScene(ScoreboardScene::createScene());
+        });
+    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
+        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
+
+    mainmenu->addChild(menuItem, 2);
+    mainmenu->setPosition(Vec2::ZERO);
+
+    // CreditsLabel
+    itemlabel = Label::createWithTTF("Credits", "fonts/Marker Felt.ttf", 24);
+    menuItem = MenuItemLabel::create(itemlabel);
+    menuItem->setCallback([&](cocos2d::Ref* sender) {
+        Director::getInstance()->replaceScene(CreditScene::createScene());
+        });
+    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
+        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
+
+    mainmenu->addChild(menuItem, 2);
+    mainmenu->setPosition(Vec2::ZERO);
+
+
+    // quitLabel
+    itemlabel = Label::createWithTTF("Quit", "fonts/Marker Felt.ttf", 24);
+    menuItem = MenuItemLabel::create(itemlabel);
+    menuItem->setCallback([&](cocos2d::Ref* sender) {
+        //Close the cocos2d-x game scene and quit the application
+        Director::getInstance()->end();
+        });
+    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
+        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
+
+    mainmenu->addChild(menuItem, 2);
+    mainmenu->setPosition(Vec2::ZERO);
+
+
+    // add main menu
+    mainmenu->setPosition(Vec2::ZERO);
+    this->addChild(mainmenu, 1);
+   
 
     /*_tileMap = new TMXTiledMap();
     _tileMap->initWithTMXFile("res/map.tmx");
@@ -94,15 +163,15 @@ bool MainMenuScene::init()
 }
 
 
-void MainMenuScene::menuCloseCallback(Ref* pSender)
-{
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
-
-
-}
+//void MainMenuScene::menuCloseCallback(Ref* pSender)
+//{
+//    //Close the cocos2d-x game scene and quit the application
+//    Director::getInstance()->end();
+//
+//    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
+//
+//    //EventCustom customEndEvent("game_scene_close_event");
+//    //_eventDispatcher->dispatchEvent(&customEndEvent);
+//
+//
+//}

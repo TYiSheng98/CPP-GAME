@@ -28,7 +28,7 @@
 #include "ui/CocosGUI.h"
 
 
-class MainMenuScene : public cocos2d::Scene
+    class CreditScene : public cocos2d::Scene
 {
 
 private:
@@ -44,8 +44,6 @@ public:
     /*void menuCloseCallback(cocos2d::Ref* pSender);*/
 
     // implement the "static create()" method manually
-    CREATE_FUNC(MainMenuScene);
-
-    cocos2d::Menu* menu;
+    CREATE_FUNC(CreditScene);
+    ;
 };
-
