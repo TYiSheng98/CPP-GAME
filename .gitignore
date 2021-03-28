@@ -1,0 +1,7 @@
+﻿cocos2d
+proj.linux
+proj.android
+proj.ios_mac
+.cocos-project.json
+CMakeLists.txt
+build_win
