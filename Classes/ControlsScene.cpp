@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ScoreboardScene.h"
+#include "ControlsScene.h"
 #include "MainMenuScene.h"
 
 
@@ -31,9 +31,9 @@ USING_NS_CC;
 using namespace cocos2d;
 using namespace cocos2d::ui;
 
-Scene* ScoreboardScene::createScene()
+Scene* ControlsScene::createScene()
 {
-    return ScoreboardScene::create();
+    return ControlsScene::create();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -44,7 +44,7 @@ static void problemLoading(const char* filename)
 }
 
 // on "init" you need to initialize your instance
-bool ScoreboardScene::init()
+bool ControlsScene::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -65,10 +65,10 @@ bool ScoreboardScene::init()
     this->addChild(bg, -2);
 
     //create title label
-    auto titlelabel = Label::createWithBMFont("craftacular/raw/font-title-export.fnt", "SCOREBOARD");
+    auto titlelabel = Label::createWithBMFont("craftacular/raw/font-title-export.fnt", "CONTROLS");
     //titlelabel->setAnchorPoint(Vec2(0, 0));
     titlelabel->setBMFontSize(20);
-    titlelabel->setColor(Color3B::RED);
+    titlelabel->setColor(Color3B::YELLOW);
     titlelabel->setPosition(Vec2(origin.x + visibleSize.width / 2,
         origin.y + visibleSize.height - titlelabel->getContentSize().height));
     this->addChild(titlelabel, -1);

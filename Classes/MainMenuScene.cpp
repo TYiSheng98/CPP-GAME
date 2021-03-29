@@ -27,6 +27,8 @@
 #include "GameScene.h"
 #include "ScoreboardScene.h"
 #include "CreditScene.h"
+#include "ControlsScene.h"
+#include "EndGameScene.h"
 
 USING_NS_CC;
 using namespace cocos2d;
@@ -63,93 +65,147 @@ bool MainMenuScene::init()
     this->addChild(bg, -2);
 
     //create title label
-    auto titlelabel = Label::createWithTTF("TOMDICKHARRY","fonts/Marker Felt.ttf", 32);
-    /*auto titlelabel = Label::create();
-    titlelabel->setBMFontFilePath("craftacular/raw/font-title-export.fnt");
-    titlelabel->setString("TOMDICKHARRY");*/
-    //auto titlelabel = Label::createWithBMFont("craftacular/skin/font-title-export.fnt", "TOMDICKHARRY",);
+    
+    auto titlelabel = Label::createWithBMFont("craftacular/raw/font-title-export.fnt", "TOMDICKHARRY");
     //titlelabel->setAnchorPoint(Vec2(0, 0));
+    titlelabel->setBMFontSize(20);
+    titlelabel->setColor(Color3B::YELLOW);
     titlelabel->setPosition(Vec2(origin.x + visibleSize.width / 2,
         origin.y + visibleSize.height - titlelabel->getContentSize().height));
-    titlelabel->setTextColor(Color4B::ORANGE);
-    titlelabel->enableOutline(Color4B::WHITE, 3);
-    //Adds a child with the z-order of -2
-    //scene->addChild(title_node, -2);
+    //titlelabel->setTextColor(Color4B::ORANGE);
+   /* titlelabel->enableOutline(Color4B::WHITE, 3);*/
+
     this->addChild(titlelabel, -1);
 
    
     //add main menu
 
-    auto mainmenu = Menu::create();
     int index = 2;
 
-    // startLabel
-    auto itemlabel = Label::createWithTTF("Start", "fonts/Marker Felt.ttf", 24);
-    auto menuItem = MenuItemLabel::create(itemlabel);
-    menuItem->setCallback([&](cocos2d::Ref* sender) {
-        Director::getInstance()->replaceScene(GameScene::createScene());
+    //startbutton
+    auto new_button = Button::create("craftacular/raw/button.9.png", "craftacular/raw/button-hover.9.png", "craftacular/raw/button-disabled.9.png");    
+    new_button->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - (++index) * 70));
+    new_button->setTitleText("NEW GAME");
+   // new_button->setScale(0.8);
+    new_button->setTitleFontName("craftacular/raw/font-export.fnt");
+    new_button->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+        switch (type)
+        {
+
+        case ui::Widget::TouchEventType::ENDED:
+            Director::getInstance()->replaceScene(GameScene::createScene());
+            break;
+        
+        }
         });
-    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
-        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
+   this->addChild(new_button);
 
-    mainmenu->addChild(menuItem, 2);
-    mainmenu->setPosition(Vec2::ZERO);
+   //options button
+   auto options_button = Button::create("craftacular/raw/button.9.png", "craftacular/raw/button-hover.9.png", "craftacular/raw/button-disabled.9.png");
+   options_button->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - (++index) * 70));
+   options_button->setTitleText("OPTIONS");
+   options_button->setTitleFontName("craftacular/raw/font-export.fnt");
+   options_button->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+       switch (type)
+       {
 
-    // optionsLabel
-    itemlabel = Label::createWithTTF("Options", "fonts/Marker Felt.ttf", 24);
-    menuItem = MenuItemLabel::create(itemlabel);
-    menuItem->setCallback([&](cocos2d::Ref* sender) {
-        Director::getInstance()->replaceScene(OptionsScene::createScene());
-        });
-    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
-        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
+       case ui::Widget::TouchEventType::ENDED:
+           Director::getInstance()->replaceScene(OptionsScene::createScene());
+           break;
 
-    mainmenu->addChild(menuItem, 2);
-    mainmenu->setPosition(Vec2::ZERO);
-
-    // scoreboardLabel
-    itemlabel = Label::createWithTTF("Scoreboard", "fonts/Marker Felt.ttf", 24);
-    menuItem = MenuItemLabel::create(itemlabel);
-    menuItem->setCallback([&](cocos2d::Ref* sender) {
-        Director::getInstance()->replaceScene(ScoreboardScene::createScene());
-        });
-    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
-        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
-
-    mainmenu->addChild(menuItem, 2);
-    mainmenu->setPosition(Vec2::ZERO);
-
-    // CreditsLabel
-    itemlabel = Label::createWithTTF("Credits", "fonts/Marker Felt.ttf", 24);
-    menuItem = MenuItemLabel::create(itemlabel);
-    menuItem->setCallback([&](cocos2d::Ref* sender) {
-        Director::getInstance()->replaceScene(CreditScene::createScene());
-        });
-    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
-        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
-
-    mainmenu->addChild(menuItem, 2);
-    mainmenu->setPosition(Vec2::ZERO);
+       }
+       });
+   this->addChild(options_button);
 
 
-    // quitLabel
-    itemlabel = Label::createWithTTF("Quit", "fonts/Marker Felt.ttf", 24);
-    menuItem = MenuItemLabel::create(itemlabel);
-    menuItem->setCallback([&](cocos2d::Ref* sender) {
-        //Close the cocos2d-x game scene and quit the application
-        Director::getInstance()->end();
-        });
-    menuItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2).x,
-        (Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height).y - (++index) * 40));
+   //controls button
+   auto controls_button = Button::create("craftacular/raw/button.9.png", "craftacular/raw/button-hover.9.png", "craftacular/raw/button-disabled.9.png");
+   controls_button->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - (++index) * 70));
+   controls_button->setTitleText("CONTROLS");
+   controls_button->setTitleFontName("craftacular/raw/font-export.fnt");
+   controls_button->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+       switch (type)
+       {
 
-    mainmenu->addChild(menuItem, 2);
-    mainmenu->setPosition(Vec2::ZERO);
+       case ui::Widget::TouchEventType::ENDED:
+           Director::getInstance()->replaceScene(ControlsScene::createScene());
+           break;
+
+       }
+       });
+   this->addChild(controls_button);
 
 
-    // add main menu
-    mainmenu->setPosition(Vec2::ZERO);
-    this->addChild(mainmenu, 1);
-   
+   //scoreboard button
+   auto scoreboard_button = Button::create("craftacular/raw/button.9.png", "craftacular/raw/button-hover.9.png", "craftacular/raw/button-disabled.9.png");
+  scoreboard_button->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - (++index) * 70));
+  scoreboard_button->setTitleText("SCOREBOARD");
+  scoreboard_button->setTitleFontName("craftacular/raw/font-export.fnt");
+  scoreboard_button->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+       switch (type)
+       {
+
+       case ui::Widget::TouchEventType::ENDED:
+           Director::getInstance()->replaceScene(ScoreboardScene::createScene());
+           break;
+
+       }
+       });
+   this->addChild(scoreboard_button);
+
+   //credits button
+   auto credits_button = Button::create("craftacular/raw/button.9.png", "craftacular/raw/button-hover.9.png", "craftacular/raw/button-disabled.9.png");
+   credits_button->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - (++index) * 70));
+   credits_button->setTitleText("CREDITS");
+   credits_button->setTitleFontName("craftacular/raw/font-export.fnt");
+   credits_button->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+       switch (type)
+       {
+
+       case ui::Widget::TouchEventType::ENDED:
+           Director::getInstance()->replaceScene(CreditScene::createScene());
+           break;
+
+       }
+       });
+   this->addChild(credits_button);
+
+
+   //quit button
+   auto quit_button = Button::create("craftacular/raw/button.9.png", "craftacular/raw/button-hover.9.png", "craftacular/raw/button-disabled.9.png");
+   quit_button->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - (++index) * 70));
+   quit_button->setTitleText("QUIT");
+   quit_button->setTitleFontName("craftacular/raw/font-export.fnt");
+   quit_button->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+       switch (type)
+       {
+
+       case ui::Widget::TouchEventType::ENDED:
+           //Close the cocos2d-x game scene and quit the application
+            Director::getInstance()->end();
+           break;
+
+       }
+       });
+   this->addChild(quit_button);
+
+   //endgame button
+   auto endgame_button = Button::create("craftacular/raw/button.9.png", "craftacular/raw/button-hover.9.png", "craftacular/raw/button-disabled.9.png");
+   endgame_button->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - (++index) * 70));
+   endgame_button->setTitleText("ENDGAME");
+   endgame_button->setTitleFontName("craftacular/raw/font-export.fnt");
+   endgame_button->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+       switch (type)
+       {
+
+       case ui::Widget::TouchEventType::ENDED:
+           Director::getInstance()->replaceScene(EndGameScene::createScene());
+           break;
+
+       }
+       });
+   this->addChild(endgame_button);
+
 
     /*_tileMap = new TMXTiledMap();
     _tileMap->initWithTMXFile("res/map.tmx");

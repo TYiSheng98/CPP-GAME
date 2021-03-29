@@ -65,13 +65,12 @@ bool CreditScene::init()
     this->addChild(bg, -2);
 
     //create title label
-    auto titlelabel = Label::createWithTTF("CREDITS", "fonts/Marker Felt.ttf", 32);
+    auto titlelabel = Label::createWithBMFont("craftacular/raw/font-title-export.fnt", "CREDITS");
+    //titlelabel->setAnchorPoint(Vec2(0, 0));
+    titlelabel->setBMFontSize(20);
+    titlelabel->setColor(Color3B::YELLOW);
     titlelabel->setPosition(Vec2(origin.x + visibleSize.width / 2,
         origin.y + visibleSize.height - titlelabel->getContentSize().height));
-    titlelabel->setTextColor(Color4B::ORANGE);
-    titlelabel->enableOutline(Color4B::WHITE, 3);
-    //Adds a child with the z-order of -2
-    //scene->addChild(title_node, -2);
     this->addChild(titlelabel, -1);
 
     //add main menu
