@@ -26,7 +26,8 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-
+USING_NS_CC;
+using namespace cocos2d::ui;
 
 class OptionsScene : public cocos2d::Scene
 {
@@ -45,5 +46,7 @@ public:
 
     // implement the "static create()" method manually
     CREATE_FUNC(OptionsScene);
+
+    void sliderEvent(Ref* sender,Slider::EventType type);
 ;
 };
