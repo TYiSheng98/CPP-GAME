@@ -1,0 +1,19 @@
+guangjun,12000
+10charhere,32000
+jingzhi,22000
+yisheng,20100
+Elger,20000
+Damien,19020
+Yi Jian,29033
+Alice,20030
+Bob,20391
+Wei,23992
+P1,100
+MCLAREN,100
+P1,100
+P1,200
+red bull,0
+MILO PENG,0
+TYS,2600
+ggwp,1200
+tys_1,200

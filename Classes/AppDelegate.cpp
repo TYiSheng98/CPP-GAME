@@ -23,13 +23,13 @@
  ****************************************************************************/
 
 #include "AppDelegate.h"
-#include "MainMenuScene.h"
+#include "MenuScenes/MainMenuScene.h"
 
- // #define USE_AUDIO_ENGINE 1
+ //#define USE_AUDIO_ENGINE 1
 
 #if USE_AUDIO_ENGINE
-#include "audio/include/AudioEngine.h"
-using namespace cocos2d::experimental;
+#include "AudioEngine.h"
+//using namespace cocos2d::experimental;
 #endif
 
 USING_NS_CC;
@@ -113,6 +113,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     register_all_packages();
+
+    /*FileUtils* fu = FileUtils::getInstance();
+    fu->setWritablePath("C:/Users/YISHENG/ict1009-team13-cpp/TDH/Resources/");*/
+    /*fu->addSearchPath("C:/Users/YISHENG/ict1009-team13-cpp/TDH/Resources/", 1);*/
 
     // create a scene. it's an autorelease object
     // [Jz] this creates the main game scene

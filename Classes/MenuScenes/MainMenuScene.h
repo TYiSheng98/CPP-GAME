@@ -47,5 +47,6 @@ public:
     CREATE_FUNC(MainMenuScene);
 
     cocos2d::Menu* menu;
+    void play_sfx(int, bool);
 };
 
